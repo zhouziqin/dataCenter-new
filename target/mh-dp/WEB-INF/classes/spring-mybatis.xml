@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+    <beans xmlns="http://www.springframework.org/schema/beans"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+        xmlns:context="http://www.springframework.org/schema/context"  
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans    
+                            http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+                            http://www.springframework.org/schema/context    
+                            http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+                            http://www.springframework.org/schema/mvc    
+                            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+							http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"> 
+        <!-- 自动扫描 -->  
+        <context:component-scan base-package="com.ucan" /> 
+       	<mvc:annotation-driven /> 
+		<!-- 配置js，css等静态文件直接映射到对应的文件夹，不被DispatcherServlet处理 -->
+		<mvc:default-servlet-handler />
+        <!-- 引入配置文件--> 
+        <bean id="property.placeholder.configurer"  class="com.ucan.utils.PropertyReaderConfigurer">  
+            <property name="location" value="classpath:jdbc.properties" />  
+        </bean>   
+         
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"  destroy-method="close"  init-method="init">  
+            <property name="driverClassName" value="${jdbc.driverClass}" />  
+            <property name="url" value="${jdbc.url}" />  
+            <property name="username" value="${jdbc.username}" />  
+            <property name="password" value="${jdbc.password}" />  
+            <!-- 初始化连接大小 -->  
+            <property name="initialSize" value="${initialSize}"></property>  
+            <!-- 连接池最大数量 -->  
+            <property name="maxActive" value="${maxActive}"></property>  
+            <!-- 连接池最大空闲 -->  
+            <property name="maxIdle" value="${maxIdle}"></property>  
+            <!-- 连接池最小空闲 -->  
+            <property name="minIdle" value="${minIdle}"></property>  
+            <!-- 获取连接最大等待时间 -->  
+            <property name="maxWait" value="${maxWait}"></property>  
+        </bean>  
+      
+        <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+            <property name="dataSource" ref="dataSource" />  
+            <!-- 自动扫描mapping.xml文件 -->  
+            <property name="mapperLocations" value="classpath:com/ucan/mapping/*.xml"></property>  
+        </bean>  
+      
+        <!-- DAO接口所在包名，Spring会自动查找其下的类 -->  
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+            <property name="basePackage" value="com.ucan.dao" />  
+            <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>  
+        </bean>  
+      
+        <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
+        <bean id="transactionManager"   class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+            <property name="dataSource" ref="dataSource" />  
+        </bean>
+     			<!-- 定义事务通知 -->  
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">  
+		    <!-- 定义方法的过滤规则 -->  
+		    <tx:attributes>  
+		        <!-- 所有方法都使用事务 -->  
+		        <tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>  
+		        <!-- 定义所有get开头的方法都是只读的 -->  
+		        <tx:method name="get*" read-only="true"/>  
+		    </tx:attributes>  
+	</tx:advice>  
+		  
+		<!-- 定义AOP配置 -->  
+	<aop:config>  
+		    <!-- 定义一个切入点 -->  
+		    <aop:pointcut expression="execution (* com.ucan.service.impl.*.*(..))" id="services"/>  
+		    <!-- 对切入点和事务的通知，进行适配 -->  
+		    <aop:advisor advice-ref="txAdvice" pointcut-ref="services"/>  
+	</aop:config> 
+    </beans>  

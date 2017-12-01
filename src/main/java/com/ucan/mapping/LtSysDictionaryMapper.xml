@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucan.dao.LtSysDictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.ucan.model.LtSysDictionary" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="FCD" property="fcd" jdbcType="TIMESTAMP" />
+    <result column="FCU" property="fcu" jdbcType="VARCHAR" />
+    <result column="LMD" property="lmd" jdbcType="TIMESTAMP" />
+    <result column="LMU" property="lmu" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CODE, NAME, FCD, FCU, LMD, LMU, STATUS, TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ucan.model.LtSysDictionaryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from LT_SYS_DICTIONARY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from LT_SYS_DICTIONARY
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from LT_SYS_DICTIONARY
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ucan.model.LtSysDictionaryExample" >
+    delete from LT_SYS_DICTIONARY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ucan.model.LtSysDictionary" >
+    insert into LT_SYS_DICTIONARY (ID, CODE, NAME, 
+      FCD, FCU, LMD, 
+      LMU, STATUS, TYPE)
+    values (#{id,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{fcd,jdbcType=TIMESTAMP}, #{fcu,jdbcType=VARCHAR}, #{lmd,jdbcType=TIMESTAMP}, 
+      #{lmu,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ucan.model.LtSysDictionary" >
+    insert into LT_SYS_DICTIONARY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="fcd != null" >
+        FCD,
+      </if>
+      <if test="fcu != null" >
+        FCU,
+      </if>
+      <if test="lmd != null" >
+        LMD,
+      </if>
+      <if test="lmu != null" >
+        LMU,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fcd != null" >
+        #{fcd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fcu != null" >
+        #{fcu,jdbcType=VARCHAR},
+      </if>
+      <if test="lmd != null" >
+        #{lmd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lmu != null" >
+        #{lmu,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ucan.model.LtSysDictionaryExample" resultType="java.lang.Integer" >
+    select count(*) from LT_SYS_DICTIONARY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LT_SYS_DICTIONARY
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.code != null" >
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fcd != null" >
+        FCD = #{record.fcd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fcu != null" >
+        FCU = #{record.fcu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lmd != null" >
+        LMD = #{record.lmd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lmu != null" >
+        LMU = #{record.lmu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LT_SYS_DICTIONARY
+    set ID = #{record.id,jdbcType=DECIMAL},
+      CODE = #{record.code,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      FCD = #{record.fcd,jdbcType=TIMESTAMP},
+      FCU = #{record.fcu,jdbcType=VARCHAR},
+      LMD = #{record.lmd,jdbcType=TIMESTAMP},
+      LMU = #{record.lmu,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=CHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ucan.model.LtSysDictionary" >
+    update LT_SYS_DICTIONARY
+    <set >
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fcd != null" >
+        FCD = #{fcd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fcu != null" >
+        FCU = #{fcu,jdbcType=VARCHAR},
+      </if>
+      <if test="lmd != null" >
+        LMD = #{lmd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lmu != null" >
+        LMU = #{lmu,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ucan.model.LtSysDictionary" >
+    update LT_SYS_DICTIONARY
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      FCD = #{fcd,jdbcType=TIMESTAMP},
+      FCU = #{fcu,jdbcType=VARCHAR},
+      LMD = #{lmd,jdbcType=TIMESTAMP},
+      LMU = #{lmu,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      TYPE = #{type,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

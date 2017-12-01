@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucan.dao.PointConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.ucan.model.PointConfig" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="LONGITUDE" property="longitude" jdbcType="VARCHAR" />
+    <result column="DIMENSION" property="dimension" jdbcType="VARCHAR" />
+    <result column="FCD" property="fcd" jdbcType="TIMESTAMP" />
+    <result column="FCU" property="fcu" jdbcType="VARCHAR" />
+    <result column="LMD" property="lmd" jdbcType="TIMESTAMP" />
+    <result column="LMU" property="lmu" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="FOREIGN_ID" property="foreignId" jdbcType="VARCHAR" />
+    <result column="TEMP_FEILD1" property="tempFeild1" jdbcType="VARCHAR" />
+    <result column="TEMP_FEILD2" property="tempFeild2" jdbcType="VARCHAR" />
+    <result column="ARED_ID" property="aredId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, LONGITUDE, DIMENSION, FCD, FCU, LMD, LMU, STATUS, TYPE, FOREIGN_ID, TEMP_FEILD1, 
+    TEMP_FEILD2, ARED_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ucan.model.PointConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from LT_POINT_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from LT_POINT_CONFIG
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from LT_POINT_CONFIG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ucan.model.PointConfigExample" >
+    delete from LT_POINT_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ucan.model.PointConfig" >
+    insert into LT_POINT_CONFIG (ID, LONGITUDE, DIMENSION, 
+      FCD, FCU, LMD, 
+      LMU, STATUS, TYPE, FOREIGN_ID, 
+      TEMP_FEILD1, TEMP_FEILD2, ARED_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{longitude,jdbcType=VARCHAR}, #{dimension,jdbcType=VARCHAR}, 
+      #{fcd,jdbcType=TIMESTAMP}, #{fcu,jdbcType=VARCHAR}, #{lmd,jdbcType=TIMESTAMP}, 
+      #{lmu,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{type,jdbcType=VARCHAR}, #{foreignId,jdbcType=VARCHAR}, 
+      #{tempFeild1,jdbcType=VARCHAR}, #{tempFeild2,jdbcType=VARCHAR}, #{aredId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ucan.model.PointConfig" >
+    insert into LT_POINT_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="longitude != null" >
+        LONGITUDE,
+      </if>
+      <if test="dimension != null" >
+        DIMENSION,
+      </if>
+      <if test="fcd != null" >
+        FCD,
+      </if>
+      <if test="fcu != null" >
+        FCU,
+      </if>
+      <if test="lmd != null" >
+        LMD,
+      </if>
+      <if test="lmu != null" >
+        LMU,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="foreignId != null" >
+        FOREIGN_ID,
+      </if>
+      <if test="tempFeild1 != null" >
+        TEMP_FEILD1,
+      </if>
+      <if test="tempFeild2 != null" >
+        TEMP_FEILD2,
+      </if>
+      <if test="aredId != null" >
+        ARED_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="dimension != null" >
+        #{dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="fcd != null" >
+        #{fcd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fcu != null" >
+        #{fcu,jdbcType=VARCHAR},
+      </if>
+      <if test="lmd != null" >
+        #{lmd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lmu != null" >
+        #{lmu,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignId != null" >
+        #{foreignId,jdbcType=VARCHAR},
+      </if>
+      <if test="tempFeild1 != null" >
+        #{tempFeild1,jdbcType=VARCHAR},
+      </if>
+      <if test="tempFeild2 != null" >
+        #{tempFeild2,jdbcType=VARCHAR},
+      </if>
+      <if test="aredId != null" >
+        #{aredId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ucan.model.PointConfigExample" resultType="java.lang.Integer" >
+    select count(*) from LT_POINT_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LT_POINT_CONFIG
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.longitude != null" >
+        LONGITUDE = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dimension != null" >
+        DIMENSION = #{record.dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fcd != null" >
+        FCD = #{record.fcd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fcu != null" >
+        FCU = #{record.fcu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lmd != null" >
+        LMD = #{record.lmd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lmu != null" >
+        LMU = #{record.lmu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foreignId != null" >
+        FOREIGN_ID = #{record.foreignId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tempFeild1 != null" >
+        TEMP_FEILD1 = #{record.tempFeild1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tempFeild2 != null" >
+        TEMP_FEILD2 = #{record.tempFeild2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aredId != null" >
+        ARED_ID = #{record.aredId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LT_POINT_CONFIG
+    set ID = #{record.id,jdbcType=DECIMAL},
+      LONGITUDE = #{record.longitude,jdbcType=VARCHAR},
+      DIMENSION = #{record.dimension,jdbcType=VARCHAR},
+      FCD = #{record.fcd,jdbcType=TIMESTAMP},
+      FCU = #{record.fcu,jdbcType=VARCHAR},
+      LMD = #{record.lmd,jdbcType=TIMESTAMP},
+      LMU = #{record.lmu,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=CHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      FOREIGN_ID = #{record.foreignId,jdbcType=VARCHAR},
+      TEMP_FEILD1 = #{record.tempFeild1,jdbcType=VARCHAR},
+      TEMP_FEILD2 = #{record.tempFeild2,jdbcType=VARCHAR},
+      ARED_ID = #{record.aredId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ucan.model.PointConfig" >
+    update LT_POINT_CONFIG
+    <set >
+      <if test="longitude != null" >
+        LONGITUDE = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="dimension != null" >
+        DIMENSION = #{dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="fcd != null" >
+        FCD = #{fcd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fcu != null" >
+        FCU = #{fcu,jdbcType=VARCHAR},
+      </if>
+      <if test="lmd != null" >
+        LMD = #{lmd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lmu != null" >
+        LMU = #{lmu,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignId != null" >
+        FOREIGN_ID = #{foreignId,jdbcType=VARCHAR},
+      </if>
+      <if test="tempFeild1 != null" >
+        TEMP_FEILD1 = #{tempFeild1,jdbcType=VARCHAR},
+      </if>
+      <if test="tempFeild2 != null" >
+        TEMP_FEILD2 = #{tempFeild2,jdbcType=VARCHAR},
+      </if>
+      <if test="aredId != null" >
+        ARED_ID = #{aredId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ucan.model.PointConfig" >
+    update LT_POINT_CONFIG
+    set LONGITUDE = #{longitude,jdbcType=VARCHAR},
+      DIMENSION = #{dimension,jdbcType=VARCHAR},
+      FCD = #{fcd,jdbcType=TIMESTAMP},
+      FCU = #{fcu,jdbcType=VARCHAR},
+      LMD = #{lmd,jdbcType=TIMESTAMP},
+      LMU = #{lmu,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      FOREIGN_ID = #{foreignId,jdbcType=VARCHAR},
+      TEMP_FEILD1 = #{tempFeild1,jdbcType=VARCHAR},
+      TEMP_FEILD2 = #{tempFeild2,jdbcType=VARCHAR},
+      ARED_ID = #{aredId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

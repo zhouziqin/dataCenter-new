@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ucan.dao.CallsMapper" >
+  <resultMap id="BaseResultMap" type="com.ucan.model.Calls" >
+    <id column="INum" property="inum" jdbcType="DECIMAL" />
+    <result column="NextINum" property="nextinum" jdbcType="DECIMAL" />
+    <result column="PrevINum" property="previnum" jdbcType="DECIMAL" />
+    <result column="StartedAt" property="startedat" jdbcType="TIMESTAMP" />
+    <result column="StartedAtUTC" property="startedatutc" jdbcType="TIMESTAMP" />
+    <result column="Channel" property="channel" jdbcType="DECIMAL" />
+    <result column="PrimaryKey" property="primarykey" jdbcType="INTEGER" />
+    <result column="Outgoing" property="outgoing" jdbcType="BIT" />
+    <result column="Internal" property="internal" jdbcType="BIT" />
+    <result column="Tandem" property="tandem" jdbcType="BIT" />
+    <result column="NoCallEnd" property="nocallend" jdbcType="BIT" />
+    <result column="NoCallStart" property="nocallstart" jdbcType="BIT" />
+    <result column="PossibleOverlap" property="possibleoverlap" jdbcType="BIT" />
+    <result column="Recording" property="recording" jdbcType="BIT" />
+    <result column="BarReplay" property="barreplay" jdbcType="BIT" />
+    <result column="ExtraData" property="extradata" jdbcType="BIT" />
+    <result column="WarnToneApplied" property="warntoneapplied" jdbcType="BIT" />
+    <result column="Mixed" property="mixed" jdbcType="BIT" />
+    <result column="Parent" property="parent" jdbcType="BIT" />
+    <result column="Child" property="child" jdbcType="BIT" />
+    <result column="StartEvent" property="startevent" jdbcType="TINYINT" />
+    <result column="StopEvent" property="stopevent" jdbcType="TINYINT" />
+    <result column="FormatId" property="formatid" jdbcType="SMALLINT" />
+    <result column="Length" property="length" jdbcType="INTEGER" />
+    <result column="Duration" property="duration" jdbcType="SMALLINT" />
+    <result column="StartByte" property="startbyte" jdbcType="DECIMAL" />
+    <result column="Digits" property="digits" jdbcType="VARCHAR" />
+    <result column="UserField1" property="userfield1" jdbcType="VARCHAR" />
+    <result column="UserField2" property="userfield2" jdbcType="VARCHAR" />
+    <result column="UserField3" property="userfield3" jdbcType="VARCHAR" />
+    <result column="UserField4" property="userfield4" jdbcType="VARCHAR" />
+    <result column="UserField5" property="userfield5" jdbcType="VARCHAR" />
+    <result column="UserField6" property="userfield6" jdbcType="VARCHAR" />
+    <result column="UserField7" property="userfield7" jdbcType="VARCHAR" />
+    <result column="UserField8" property="userfield8" jdbcType="VARCHAR" />
+    <result column="UserField9" property="userfield9" jdbcType="VARCHAR" />
+    <result column="UserField10" property="userfield10" jdbcType="VARCHAR" />
+    <result column="UserField11" property="userfield11" jdbcType="VARCHAR" />
+    <result column="UserField12" property="userfield12" jdbcType="VARCHAR" />
+    <result column="UserField13" property="userfield13" jdbcType="VARCHAR" />
+    <result column="UserField14" property="userfield14" jdbcType="VARCHAR" />
+    <result column="UserField15" property="userfield15" jdbcType="VARCHAR" />
+    <result column="LastTagTime" property="lasttagtime" jdbcType="TIMESTAMP" />
+    <result column="ItemModifiedDateTime" property="itemmodifieddatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    INum, NextINum, PrevINum, StartedAt, StartedAtUTC, Channel, PrimaryKey, Outgoing, 
+    Internal, Tandem, NoCallEnd, NoCallStart, PossibleOverlap, Recording, BarReplay, 
+    ExtraData, WarnToneApplied, Mixed, Parent, Child, StartEvent, StopEvent, FormatId, 
+    Length, Duration, StartByte, Digits, UserField1, UserField2, UserField3, UserField4, 
+    UserField5, UserField6, UserField7, UserField8, UserField9, UserField10, UserField11, 
+    UserField12, UserField13, UserField14, UserField15, LastTagTime, ItemModifiedDateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ucan.model.CallsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tblCalls
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from tblCalls
+    where INum = #{inum,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from tblCalls
+    where INum = #{inum,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ucan.model.CallsExample" >
+    delete from tblCalls
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ucan.model.Calls" >
+    insert into tblCalls (INum, NextINum, PrevINum, 
+      StartedAt, StartedAtUTC, Channel, 
+      PrimaryKey, Outgoing, Internal, 
+      Tandem, NoCallEnd, NoCallStart, 
+      PossibleOverlap, Recording, BarReplay, 
+      ExtraData, WarnToneApplied, Mixed, 
+      Parent, Child, StartEvent, 
+      StopEvent, FormatId, Length, 
+      Duration, StartByte, Digits, 
+      UserField1, UserField2, UserField3, 
+      UserField4, UserField5, UserField6, 
+      UserField7, UserField8, UserField9, 
+      UserField10, UserField11, UserField12, 
+      UserField13, UserField14, UserField15, 
+      LastTagTime, ItemModifiedDateTime)
+    values (#{inum,jdbcType=DECIMAL}, #{nextinum,jdbcType=DECIMAL}, #{previnum,jdbcType=DECIMAL}, 
+      #{startedat,jdbcType=TIMESTAMP}, #{startedatutc,jdbcType=TIMESTAMP}, #{channel,jdbcType=DECIMAL}, 
+      #{primarykey,jdbcType=INTEGER}, #{outgoing,jdbcType=BIT}, #{internal,jdbcType=BIT}, 
+      #{tandem,jdbcType=BIT}, #{nocallend,jdbcType=BIT}, #{nocallstart,jdbcType=BIT}, 
+      #{possibleoverlap,jdbcType=BIT}, #{recording,jdbcType=BIT}, #{barreplay,jdbcType=BIT}, 
+      #{extradata,jdbcType=BIT}, #{warntoneapplied,jdbcType=BIT}, #{mixed,jdbcType=BIT}, 
+      #{parent,jdbcType=BIT}, #{child,jdbcType=BIT}, #{startevent,jdbcType=TINYINT}, 
+      #{stopevent,jdbcType=TINYINT}, #{formatid,jdbcType=SMALLINT}, #{length,jdbcType=INTEGER}, 
+      #{duration,jdbcType=SMALLINT}, #{startbyte,jdbcType=DECIMAL}, #{digits,jdbcType=VARCHAR}, 
+      #{userfield1,jdbcType=VARCHAR}, #{userfield2,jdbcType=VARCHAR}, #{userfield3,jdbcType=VARCHAR}, 
+      #{userfield4,jdbcType=VARCHAR}, #{userfield5,jdbcType=VARCHAR}, #{userfield6,jdbcType=VARCHAR}, 
+      #{userfield7,jdbcType=VARCHAR}, #{userfield8,jdbcType=VARCHAR}, #{userfield9,jdbcType=VARCHAR}, 
+      #{userfield10,jdbcType=VARCHAR}, #{userfield11,jdbcType=VARCHAR}, #{userfield12,jdbcType=VARCHAR}, 
+      #{userfield13,jdbcType=VARCHAR}, #{userfield14,jdbcType=VARCHAR}, #{userfield15,jdbcType=VARCHAR}, 
+      #{lasttagtime,jdbcType=TIMESTAMP}, #{itemmodifieddatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ucan.model.Calls" >
+    insert into tblCalls
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="inum != null" >
+        INum,
+      </if>
+      <if test="nextinum != null" >
+        NextINum,
+      </if>
+      <if test="previnum != null" >
+        PrevINum,
+      </if>
+      <if test="startedat != null" >
+        StartedAt,
+      </if>
+      <if test="startedatutc != null" >
+        StartedAtUTC,
+      </if>
+      <if test="channel != null" >
+        Channel,
+      </if>
+      <if test="primarykey != null" >
+        PrimaryKey,
+      </if>
+      <if test="outgoing != null" >
+        Outgoing,
+      </if>
+      <if test="internal != null" >
+        Internal,
+      </if>
+      <if test="tandem != null" >
+        Tandem,
+      </if>
+      <if test="nocallend != null" >
+        NoCallEnd,
+      </if>
+      <if test="nocallstart != null" >
+        NoCallStart,
+      </if>
+      <if test="possibleoverlap != null" >
+        PossibleOverlap,
+      </if>
+      <if test="recording != null" >
+        Recording,
+      </if>
+      <if test="barreplay != null" >
+        BarReplay,
+      </if>
+      <if test="extradata != null" >
+        ExtraData,
+      </if>
+      <if test="warntoneapplied != null" >
+        WarnToneApplied,
+      </if>
+      <if test="mixed != null" >
+        Mixed,
+      </if>
+      <if test="parent != null" >
+        Parent,
+      </if>
+      <if test="child != null" >
+        Child,
+      </if>
+      <if test="startevent != null" >
+        StartEvent,
+      </if>
+      <if test="stopevent != null" >
+        StopEvent,
+      </if>
+      <if test="formatid != null" >
+        FormatId,
+      </if>
+      <if test="length != null" >
+        Length,
+      </if>
+      <if test="duration != null" >
+        Duration,
+      </if>
+      <if test="startbyte != null" >
+        StartByte,
+      </if>
+      <if test="digits != null" >
+        Digits,
+      </if>
+      <if test="userfield1 != null" >
+        UserField1,
+      </if>
+      <if test="userfield2 != null" >
+        UserField2,
+      </if>
+      <if test="userfield3 != null" >
+        UserField3,
+      </if>
+      <if test="userfield4 != null" >
+        UserField4,
+      </if>
+      <if test="userfield5 != null" >
+        UserField5,
+      </if>
+      <if test="userfield6 != null" >
+        UserField6,
+      </if>
+      <if test="userfield7 != null" >
+        UserField7,
+      </if>
+      <if test="userfield8 != null" >
+        UserField8,
+      </if>
+      <if test="userfield9 != null" >
+        UserField9,
+      </if>
+      <if test="userfield10 != null" >
+        UserField10,
+      </if>
+      <if test="userfield11 != null" >
+        UserField11,
+      </if>
+      <if test="userfield12 != null" >
+        UserField12,
+      </if>
+      <if test="userfield13 != null" >
+        UserField13,
+      </if>
+      <if test="userfield14 != null" >
+        UserField14,
+      </if>
+      <if test="userfield15 != null" >
+        UserField15,
+      </if>
+      <if test="lasttagtime != null" >
+        LastTagTime,
+      </if>
+      <if test="itemmodifieddatetime != null" >
+        ItemModifiedDateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="inum != null" >
+        #{inum,jdbcType=DECIMAL},
+      </if>
+      <if test="nextinum != null" >
+        #{nextinum,jdbcType=DECIMAL},
+      </if>
+      <if test="previnum != null" >
+        #{previnum,jdbcType=DECIMAL},
+      </if>
+      <if test="startedat != null" >
+        #{startedat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startedatutc != null" >
+        #{startedatutc,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=DECIMAL},
+      </if>
+      <if test="primarykey != null" >
+        #{primarykey,jdbcType=INTEGER},
+      </if>
+      <if test="outgoing != null" >
+        #{outgoing,jdbcType=BIT},
+      </if>
+      <if test="internal != null" >
+        #{internal,jdbcType=BIT},
+      </if>
+      <if test="tandem != null" >
+        #{tandem,jdbcType=BIT},
+      </if>
+      <if test="nocallend != null" >
+        #{nocallend,jdbcType=BIT},
+      </if>
+      <if test="nocallstart != null" >
+        #{nocallstart,jdbcType=BIT},
+      </if>
+      <if test="possibleoverlap != null" >
+        #{possibleoverlap,jdbcType=BIT},
+      </if>
+      <if test="recording != null" >
+        #{recording,jdbcType=BIT},
+      </if>
+      <if test="barreplay != null" >
+        #{barreplay,jdbcType=BIT},
+      </if>
+      <if test="extradata != null" >
+        #{extradata,jdbcType=BIT},
+      </if>
+      <if test="warntoneapplied != null" >
+        #{warntoneapplied,jdbcType=BIT},
+      </if>
+      <if test="mixed != null" >
+        #{mixed,jdbcType=BIT},
+      </if>
+      <if test="parent != null" >
+        #{parent,jdbcType=BIT},
+      </if>
+      <if test="child != null" >
+        #{child,jdbcType=BIT},
+      </if>
+      <if test="startevent != null" >
+        #{startevent,jdbcType=TINYINT},
+      </if>
+      <if test="stopevent != null" >
+        #{stopevent,jdbcType=TINYINT},
+      </if>
+      <if test="formatid != null" >
+        #{formatid,jdbcType=SMALLINT},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=SMALLINT},
+      </if>
+      <if test="startbyte != null" >
+        #{startbyte,jdbcType=DECIMAL},
+      </if>
+      <if test="digits != null" >
+        #{digits,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield1 != null" >
+        #{userfield1,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield2 != null" >
+        #{userfield2,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield3 != null" >
+        #{userfield3,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield4 != null" >
+        #{userfield4,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield5 != null" >
+        #{userfield5,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield6 != null" >
+        #{userfield6,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield7 != null" >
+        #{userfield7,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield8 != null" >
+        #{userfield8,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield9 != null" >
+        #{userfield9,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield10 != null" >
+        #{userfield10,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield11 != null" >
+        #{userfield11,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield12 != null" >
+        #{userfield12,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield13 != null" >
+        #{userfield13,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield14 != null" >
+        #{userfield14,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield15 != null" >
+        #{userfield15,jdbcType=VARCHAR},
+      </if>
+      <if test="lasttagtime != null" >
+        #{lasttagtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemmodifieddatetime != null" >
+        #{itemmodifieddatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ucan.model.CallsExample" resultType="java.lang.Integer" >
+    select count(*) from tblCalls
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tblCalls
+    <set >
+      <if test="record.inum != null" >
+        INum = #{record.inum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nextinum != null" >
+        NextINum = #{record.nextinum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.previnum != null" >
+        PrevINum = #{record.previnum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.startedat != null" >
+        StartedAt = #{record.startedat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startedatutc != null" >
+        StartedAtUTC = #{record.startedatutc,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.channel != null" >
+        Channel = #{record.channel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.primarykey != null" >
+        PrimaryKey = #{record.primarykey,jdbcType=INTEGER},
+      </if>
+      <if test="record.outgoing != null" >
+        Outgoing = #{record.outgoing,jdbcType=BIT},
+      </if>
+      <if test="record.internal != null" >
+        Internal = #{record.internal,jdbcType=BIT},
+      </if>
+      <if test="record.tandem != null" >
+        Tandem = #{record.tandem,jdbcType=BIT},
+      </if>
+      <if test="record.nocallend != null" >
+        NoCallEnd = #{record.nocallend,jdbcType=BIT},
+      </if>
+      <if test="record.nocallstart != null" >
+        NoCallStart = #{record.nocallstart,jdbcType=BIT},
+      </if>
+      <if test="record.possibleoverlap != null" >
+        PossibleOverlap = #{record.possibleoverlap,jdbcType=BIT},
+      </if>
+      <if test="record.recording != null" >
+        Recording = #{record.recording,jdbcType=BIT},
+      </if>
+      <if test="record.barreplay != null" >
+        BarReplay = #{record.barreplay,jdbcType=BIT},
+      </if>
+      <if test="record.extradata != null" >
+        ExtraData = #{record.extradata,jdbcType=BIT},
+      </if>
+      <if test="record.warntoneapplied != null" >
+        WarnToneApplied = #{record.warntoneapplied,jdbcType=BIT},
+      </if>
+      <if test="record.mixed != null" >
+        Mixed = #{record.mixed,jdbcType=BIT},
+      </if>
+      <if test="record.parent != null" >
+        Parent = #{record.parent,jdbcType=BIT},
+      </if>
+      <if test="record.child != null" >
+        Child = #{record.child,jdbcType=BIT},
+      </if>
+      <if test="record.startevent != null" >
+        StartEvent = #{record.startevent,jdbcType=TINYINT},
+      </if>
+      <if test="record.stopevent != null" >
+        StopEvent = #{record.stopevent,jdbcType=TINYINT},
+      </if>
+      <if test="record.formatid != null" >
+        FormatId = #{record.formatid,jdbcType=SMALLINT},
+      </if>
+      <if test="record.length != null" >
+        Length = #{record.length,jdbcType=INTEGER},
+      </if>
+      <if test="record.duration != null" >
+        Duration = #{record.duration,jdbcType=SMALLINT},
+      </if>
+      <if test="record.startbyte != null" >
+        StartByte = #{record.startbyte,jdbcType=DECIMAL},
+      </if>
+      <if test="record.digits != null" >
+        Digits = #{record.digits,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield1 != null" >
+        UserField1 = #{record.userfield1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield2 != null" >
+        UserField2 = #{record.userfield2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield3 != null" >
+        UserField3 = #{record.userfield3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield4 != null" >
+        UserField4 = #{record.userfield4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield5 != null" >
+        UserField5 = #{record.userfield5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield6 != null" >
+        UserField6 = #{record.userfield6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield7 != null" >
+        UserField7 = #{record.userfield7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield8 != null" >
+        UserField8 = #{record.userfield8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield9 != null" >
+        UserField9 = #{record.userfield9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield10 != null" >
+        UserField10 = #{record.userfield10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield11 != null" >
+        UserField11 = #{record.userfield11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield12 != null" >
+        UserField12 = #{record.userfield12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield13 != null" >
+        UserField13 = #{record.userfield13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield14 != null" >
+        UserField14 = #{record.userfield14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userfield15 != null" >
+        UserField15 = #{record.userfield15,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lasttagtime != null" >
+        LastTagTime = #{record.lasttagtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemmodifieddatetime != null" >
+        ItemModifiedDateTime = #{record.itemmodifieddatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tblCalls
+    set INum = #{record.inum,jdbcType=DECIMAL},
+      NextINum = #{record.nextinum,jdbcType=DECIMAL},
+      PrevINum = #{record.previnum,jdbcType=DECIMAL},
+      StartedAt = #{record.startedat,jdbcType=TIMESTAMP},
+      StartedAtUTC = #{record.startedatutc,jdbcType=TIMESTAMP},
+      Channel = #{record.channel,jdbcType=DECIMAL},
+      PrimaryKey = #{record.primarykey,jdbcType=INTEGER},
+      Outgoing = #{record.outgoing,jdbcType=BIT},
+      Internal = #{record.internal,jdbcType=BIT},
+      Tandem = #{record.tandem,jdbcType=BIT},
+      NoCallEnd = #{record.nocallend,jdbcType=BIT},
+      NoCallStart = #{record.nocallstart,jdbcType=BIT},
+      PossibleOverlap = #{record.possibleoverlap,jdbcType=BIT},
+      Recording = #{record.recording,jdbcType=BIT},
+      BarReplay = #{record.barreplay,jdbcType=BIT},
+      ExtraData = #{record.extradata,jdbcType=BIT},
+      WarnToneApplied = #{record.warntoneapplied,jdbcType=BIT},
+      Mixed = #{record.mixed,jdbcType=BIT},
+      Parent = #{record.parent,jdbcType=BIT},
+      Child = #{record.child,jdbcType=BIT},
+      StartEvent = #{record.startevent,jdbcType=TINYINT},
+      StopEvent = #{record.stopevent,jdbcType=TINYINT},
+      FormatId = #{record.formatid,jdbcType=SMALLINT},
+      Length = #{record.length,jdbcType=INTEGER},
+      Duration = #{record.duration,jdbcType=SMALLINT},
+      StartByte = #{record.startbyte,jdbcType=DECIMAL},
+      Digits = #{record.digits,jdbcType=VARCHAR},
+      UserField1 = #{record.userfield1,jdbcType=VARCHAR},
+      UserField2 = #{record.userfield2,jdbcType=VARCHAR},
+      UserField3 = #{record.userfield3,jdbcType=VARCHAR},
+      UserField4 = #{record.userfield4,jdbcType=VARCHAR},
+      UserField5 = #{record.userfield5,jdbcType=VARCHAR},
+      UserField6 = #{record.userfield6,jdbcType=VARCHAR},
+      UserField7 = #{record.userfield7,jdbcType=VARCHAR},
+      UserField8 = #{record.userfield8,jdbcType=VARCHAR},
+      UserField9 = #{record.userfield9,jdbcType=VARCHAR},
+      UserField10 = #{record.userfield10,jdbcType=VARCHAR},
+      UserField11 = #{record.userfield11,jdbcType=VARCHAR},
+      UserField12 = #{record.userfield12,jdbcType=VARCHAR},
+      UserField13 = #{record.userfield13,jdbcType=VARCHAR},
+      UserField14 = #{record.userfield14,jdbcType=VARCHAR},
+      UserField15 = #{record.userfield15,jdbcType=VARCHAR},
+      LastTagTime = #{record.lasttagtime,jdbcType=TIMESTAMP},
+      ItemModifiedDateTime = #{record.itemmodifieddatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ucan.model.Calls" >
+    update tblCalls
+    <set >
+      <if test="nextinum != null" >
+        NextINum = #{nextinum,jdbcType=DECIMAL},
+      </if>
+      <if test="previnum != null" >
+        PrevINum = #{previnum,jdbcType=DECIMAL},
+      </if>
+      <if test="startedat != null" >
+        StartedAt = #{startedat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startedatutc != null" >
+        StartedAtUTC = #{startedatutc,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channel != null" >
+        Channel = #{channel,jdbcType=DECIMAL},
+      </if>
+      <if test="primarykey != null" >
+        PrimaryKey = #{primarykey,jdbcType=INTEGER},
+      </if>
+      <if test="outgoing != null" >
+        Outgoing = #{outgoing,jdbcType=BIT},
+      </if>
+      <if test="internal != null" >
+        Internal = #{internal,jdbcType=BIT},
+      </if>
+      <if test="tandem != null" >
+        Tandem = #{tandem,jdbcType=BIT},
+      </if>
+      <if test="nocallend != null" >
+        NoCallEnd = #{nocallend,jdbcType=BIT},
+      </if>
+      <if test="nocallstart != null" >
+        NoCallStart = #{nocallstart,jdbcType=BIT},
+      </if>
+      <if test="possibleoverlap != null" >
+        PossibleOverlap = #{possibleoverlap,jdbcType=BIT},
+      </if>
+      <if test="recording != null" >
+        Recording = #{recording,jdbcType=BIT},
+      </if>
+      <if test="barreplay != null" >
+        BarReplay = #{barreplay,jdbcType=BIT},
+      </if>
+      <if test="extradata != null" >
+        ExtraData = #{extradata,jdbcType=BIT},
+      </if>
+      <if test="warntoneapplied != null" >
+        WarnToneApplied = #{warntoneapplied,jdbcType=BIT},
+      </if>
+      <if test="mixed != null" >
+        Mixed = #{mixed,jdbcType=BIT},
+      </if>
+      <if test="parent != null" >
+        Parent = #{parent,jdbcType=BIT},
+      </if>
+      <if test="child != null" >
+        Child = #{child,jdbcType=BIT},
+      </if>
+      <if test="startevent != null" >
+        StartEvent = #{startevent,jdbcType=TINYINT},
+      </if>
+      <if test="stopevent != null" >
+        StopEvent = #{stopevent,jdbcType=TINYINT},
+      </if>
+      <if test="formatid != null" >
+        FormatId = #{formatid,jdbcType=SMALLINT},
+      </if>
+      <if test="length != null" >
+        Length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null" >
+        Duration = #{duration,jdbcType=SMALLINT},
+      </if>
+      <if test="startbyte != null" >
+        StartByte = #{startbyte,jdbcType=DECIMAL},
+      </if>
+      <if test="digits != null" >
+        Digits = #{digits,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield1 != null" >
+        UserField1 = #{userfield1,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield2 != null" >
+        UserField2 = #{userfield2,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield3 != null" >
+        UserField3 = #{userfield3,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield4 != null" >
+        UserField4 = #{userfield4,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield5 != null" >
+        UserField5 = #{userfield5,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield6 != null" >
+        UserField6 = #{userfield6,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield7 != null" >
+        UserField7 = #{userfield7,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield8 != null" >
+        UserField8 = #{userfield8,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield9 != null" >
+        UserField9 = #{userfield9,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield10 != null" >
+        UserField10 = #{userfield10,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield11 != null" >
+        UserField11 = #{userfield11,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield12 != null" >
+        UserField12 = #{userfield12,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield13 != null" >
+        UserField13 = #{userfield13,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield14 != null" >
+        UserField14 = #{userfield14,jdbcType=VARCHAR},
+      </if>
+      <if test="userfield15 != null" >
+        UserField15 = #{userfield15,jdbcType=VARCHAR},
+      </if>
+      <if test="lasttagtime != null" >
+        LastTagTime = #{lasttagtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemmodifieddatetime != null" >
+        ItemModifiedDateTime = #{itemmodifieddatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where INum = #{inum,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ucan.model.Calls" >
+    update tblCalls
+    set NextINum = #{nextinum,jdbcType=DECIMAL},
+      PrevINum = #{previnum,jdbcType=DECIMAL},
+      StartedAt = #{startedat,jdbcType=TIMESTAMP},
+      StartedAtUTC = #{startedatutc,jdbcType=TIMESTAMP},
+      Channel = #{channel,jdbcType=DECIMAL},
+      PrimaryKey = #{primarykey,jdbcType=INTEGER},
+      Outgoing = #{outgoing,jdbcType=BIT},
+      Internal = #{internal,jdbcType=BIT},
+      Tandem = #{tandem,jdbcType=BIT},
+      NoCallEnd = #{nocallend,jdbcType=BIT},
+      NoCallStart = #{nocallstart,jdbcType=BIT},
+      PossibleOverlap = #{possibleoverlap,jdbcType=BIT},
+      Recording = #{recording,jdbcType=BIT},
+      BarReplay = #{barreplay,jdbcType=BIT},
+      ExtraData = #{extradata,jdbcType=BIT},
+      WarnToneApplied = #{warntoneapplied,jdbcType=BIT},
+      Mixed = #{mixed,jdbcType=BIT},
+      Parent = #{parent,jdbcType=BIT},
+      Child = #{child,jdbcType=BIT},
+      StartEvent = #{startevent,jdbcType=TINYINT},
+      StopEvent = #{stopevent,jdbcType=TINYINT},
+      FormatId = #{formatid,jdbcType=SMALLINT},
+      Length = #{length,jdbcType=INTEGER},
+      Duration = #{duration,jdbcType=SMALLINT},
+      StartByte = #{startbyte,jdbcType=DECIMAL},
+      Digits = #{digits,jdbcType=VARCHAR},
+      UserField1 = #{userfield1,jdbcType=VARCHAR},
+      UserField2 = #{userfield2,jdbcType=VARCHAR},
+      UserField3 = #{userfield3,jdbcType=VARCHAR},
+      UserField4 = #{userfield4,jdbcType=VARCHAR},
+      UserField5 = #{userfield5,jdbcType=VARCHAR},
+      UserField6 = #{userfield6,jdbcType=VARCHAR},
+      UserField7 = #{userfield7,jdbcType=VARCHAR},
+      UserField8 = #{userfield8,jdbcType=VARCHAR},
+      UserField9 = #{userfield9,jdbcType=VARCHAR},
+      UserField10 = #{userfield10,jdbcType=VARCHAR},
+      UserField11 = #{userfield11,jdbcType=VARCHAR},
+      UserField12 = #{userfield12,jdbcType=VARCHAR},
+      UserField13 = #{userfield13,jdbcType=VARCHAR},
+      UserField14 = #{userfield14,jdbcType=VARCHAR},
+      UserField15 = #{userfield15,jdbcType=VARCHAR},
+      LastTagTime = #{lasttagtime,jdbcType=TIMESTAMP},
+      ItemModifiedDateTime = #{itemmodifieddatetime,jdbcType=TIMESTAMP}
+    where INum = #{inum,jdbcType=DECIMAL}
+  </update>
+   <select id="getAll"  resultMap="BaseResultMap">
+		SELECT    *
+		FROM        tblCalls
+		WHERE   inum in   
+				(		
+						SELECT  TOP (100) MAX(INum) AS id
+                        FROM  tblCalls AS tblCalls_1
+                        GROUP BY UserField10
+                        ORDER BY id DESC 
+                ) 
+       <![CDATA[ and ( len(UserField5) > 4 or len(UserField6) > 4 ) and duration > 2 ]]>
+		ORDER BY StartedAt DESC
+                     
+	</select>
+</mapper>
